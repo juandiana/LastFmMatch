@@ -173,6 +173,10 @@ package
 			return distance;
 			*/
 			
+			if (color == null || otherBall.getColor() == null) {
+				return 400;
+			}
+			
 			if (color.isEqual(otherBall.getColor())) {
 				return 300;
 			}

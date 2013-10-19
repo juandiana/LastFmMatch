@@ -8,6 +8,7 @@ package
 	import com.lfm.services.UserData.TopUserArtists;
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
+	import flash.events.MouseEvent;
 	import flash.geom.Point;
 	import flash.net.URLRequest;
 	import flash.text.TextField;
@@ -35,6 +36,7 @@ package
 		private var visualizationScreen2:VisualizationScreen;
 		private var wasOneDataLoaded:Boolean = false;
 		private var tooltip:m_Tooltip;
+		private var divisionLine:m_divisionLine;
 		
 		public var layer1:MovieClip;
 		public var layer2:MovieClip;
@@ -47,16 +49,8 @@ package
 			if (stage) init();
 			else addEventListener(Event.ADDED_TO_STAGE, init);
 			
-			stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);			
 		}
-		
-		
-		private function onKeyDown(e:KeyboardEvent):void 
-		{
-			visualizationScreen1.setMix(true);
-			visualizationScreen2.setMix(true);
-		}
-		
+				
 				
 		private function init(e:Event = null):void 
 		{
@@ -76,6 +70,7 @@ package
 			tooltip.gotoAndStop("up");
 			
 			layer2.addChild(tooltip);			
+
 		}
 		
 		
@@ -98,6 +93,15 @@ package
 		
 		public function startVisualization(username1:String, username2:String):void 
 		{						
+									
+			divisionLine = new m_divisionLine();
+			divisionLine.gotoAndStop("join");
+			layer2.addChild(divisionLine);
+			divisionLine.x = SCREEN_WIDTH / 2;			
+			divisionLine.y = 0;
+			divisionLine.joinBtn.addEventListener(MouseEvent.CLICK, onJoinButtonClick);
+			
+			
 			artistdata1 = new TopUserArtists(username1);
 			artistdata1.addEventListener("complete",serviceLoaded);
 			artistdata1.load();
@@ -106,16 +110,25 @@ package
 			artistdata2.addEventListener("complete",serviceLoaded);
 			artistdata2.load();
 			
-			var screen1Center:Point = new Point(SCREEN_WIDTH / 5, SCREEN_HEIGHT / 2);
-			visualizationScreen1 = new VisualizationScreen(screen1Center, false);
+			var screen1Center:Point = new Point(SCREEN_WIDTH / 9, SCREEN_HEIGHT / 2);
+			visualizationScreen1 = new VisualizationScreen(screen1Center, true);
 			
-			var screen2Center:Point = new Point(SCREEN_WIDTH * (4 / 5), SCREEN_HEIGHT / 2);
-			visualizationScreen2 = new VisualizationScreen(screen2Center, true);
+			var screen2Center:Point = new Point(SCREEN_WIDTH * (8 / 9), SCREEN_HEIGHT / 2);
+			visualizationScreen2 = new VisualizationScreen(screen2Center, false);
 			
 			visualizationScreen1.setOtherScreen(visualizationScreen2);
 			visualizationScreen2.setOtherScreen(visualizationScreen1);
 		
 			stage.focus = stage;
+		}
+		
+		
+		private function onJoinButtonClick(e:MouseEvent):void 
+		{
+			visualizationScreen1.setMix(true);
+			visualizationScreen2.setMix(true);
+			divisionLine.gotoAndStop("split");
+			divisionLine.visible = false;
 		}
 		
 		
