@@ -74,8 +74,8 @@ package
 		
 		public function getColor(tags:Vector.<String>):Color
 		{
-			for each (var colorAndTags:ColorAndTags in colorsAndTags) {
-				for each (var tag:String in tags) {
+			for each (var tag:String in tags) {
+				for each (var colorAndTags:ColorAndTags in colorsAndTags) {
 					if (colorAndTags.containsTag(tag)) {
 						return colorAndTags.getColor();
 					}
