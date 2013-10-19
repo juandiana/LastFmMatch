@@ -17,6 +17,12 @@ package
 			this.g = g;
 			this.b = b;
 		}
+
+		
+		public function isEqual(color:Color):Boolean
+		{
+			return r == color.r && g == color.g && b == color.b;
+		}
 		
 	}
 

@@ -8,15 +8,15 @@
   <compiler>
     <define append="true">
       <name>CONFIG::debug</name>
-      <value>false</value>
-    </define>
-    <define append="true">
-      <name>CONFIG::release</name>
       <value>true</value>
     </define>
     <define append="true">
+      <name>CONFIG::release</name>
+      <value>false</value>
+    </define>
+    <define append="true">
       <name>CONFIG::timeStamp</name>
-      <value>'18/10/2013'</value>
+      <value>'10/19/2013'</value>
     </define>
     <define append="true">
       <name>CONFIG::air</name>
@@ -30,25 +30,23 @@
       <name>CONFIG::desktop</name>
       <value>false</value>
     </define>
-    <optimize>true</optimize>
-    <omit-trace-statements>true</omit-trace-statements>
-    <verbose-stacktraces>false</verbose-stacktraces>
+    <verbose-stacktraces>true</verbose-stacktraces>
     <source-path append="true">
-      <path-element>D:\TallerHCI\Lab3\LastFmMatch\src</path-element>
-      <path-element>D:\TallerHCI\Lab3\LastFmMatch\lib\lastfm-as3</path-element>
-      <path-element>C:\Program Files (x86)\FlashDevelop\Library\AS3\classes</path-element>
+      <path-element>D:\Store\Workspace\Proyectos FIng\LastFmMatch\src</path-element>
+      <path-element>D:\Store\Workspace\Proyectos FIng\LastFmMatch\lib\lastfm-as3</path-element>
+      <path-element>D:\Program Files\FlashDevelop\Library\AS3\classes</path-element>
     </source-path>
     <library-path append="true">
-      <path-element>D:\TallerHCI\Lab3\LastFmMatch\assets.swc</path-element>
+      <path-element>D:\Store\Workspace\Proyectos FIng\LastFmMatch\assets.swc</path-element>
     </library-path>
   </compiler>
   <file-specs>
-    <path-element>D:\TallerHCI\Lab3\LastFmMatch\src\Main.as</path-element>
+    <path-element>D:\Store\Workspace\Proyectos FIng\LastFmMatch\src\Main.as</path-element>
   </file-specs>
   <default-background-color>#FFFFFF</default-background-color>
   <default-frame-rate>30</default-frame-rate>
   <default-size>
-    <width>1650</width>
-    <height>1050</height>
+    <width>1024</width>
+    <height>768</height>
   </default-size>
 </flex-config>

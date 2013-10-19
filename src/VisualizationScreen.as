@@ -18,6 +18,7 @@ package
 		private var numArtistsWithoutBall:int = NUM_ARTISTS;
 		private var otherScreen:VisualizationScreen;	
 		private var hasRings:Boolean;
+		private var mix:Boolean;
 		
 		public function VisualizationScreen(center:Point, hasRings:Boolean)
 		{	
@@ -43,24 +44,19 @@ package
 		public function getSpeedFromOtherBalls(aBall:ArtistBall):Point
 		{
 			var speed:Point = new Point(0, 0);
-				
-			/*
-			var overlappingBall:ArtistBall = getOverlappingBall(aBall);
-			if (overlappingBall != null) {
-				speed = speed.add(aBall.getRepulsionSpeed(overlappingBall));
-			}	
-			*/
 			
 			for each (var ball:ArtistBall in mGetManageables()) {
 				if (ball != aBall) {					
 					speed = speed.add(ball.getAttractionSpeed(aBall));
 				}				
 			}
-			for each (ball in otherScreen.mGetManageables()) {
-				if (ball.areTopTagsLoaded() && ball != aBall) {					
-					speed = speed.add(ball.getAttractionSpeed(aBall));
-				}
-			}	
+			if (mix) {
+				for each (ball in otherScreen.mGetManageables()) {
+					if (ball.areTopTagsLoaded() && ball != aBall) {					
+						speed = speed.add(ball.getAttractionSpeed(aBall));
+					}
+				}	
+			}
 			
 			if (speed.length > 200) {
 				speed.normalize(200);
@@ -127,6 +123,11 @@ package
 			this.otherScreen = otherScreen;
 		}
 		
+		
+		public function setMix(mix:Boolean):void
+		{
+			this.mix = mix;
+		}
 	}
 
 }

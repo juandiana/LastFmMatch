@@ -33,8 +33,7 @@ package
 			startVisualization();
 		}
 		
-		private function startVisualization():void {
-			trace("start visualization");
+		private function startVisualization():void {			
 			Main.instance.startVisualization(mc.input1.text, mc.input2.text);
 			Main.instance.layer1.removeChild(mc);
 		}

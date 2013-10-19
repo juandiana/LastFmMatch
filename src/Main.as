@@ -7,6 +7,7 @@ package
 	import flash.events.Event;
 	import com.lfm.services.UserData.TopUserArtists;
 	import flash.events.Event;
+	import flash.events.KeyboardEvent;
 	import flash.geom.Point;
 	import flash.net.URLRequest;
 	import flash.text.TextField;
@@ -19,8 +20,8 @@ package
 	 */
 	public class Main extends Sprite 
 	{
-		public static const SCREEN_WIDTH:Number = 1650.0;
-		public static const SCREEN_HEIGHT:Number = 1050.0;
+		public static const SCREEN_WIDTH:Number = 1024.0;
+		public static const SCREEN_HEIGHT:Number = 768.0;
 		
 		public static var instance:Main;
 		
@@ -41,10 +42,19 @@ package
 		public function Main():void 
 		{
 			instance = this;
-			lastTime = getTimer();			
+			lastTime = getTimer();	
 			
 			if (stage) init();
-			else addEventListener(Event.ADDED_TO_STAGE, init);		
+			else addEventListener(Event.ADDED_TO_STAGE, init);
+			
+			stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);			
+		}
+		
+		
+		private function onKeyDown(e:KeyboardEvent):void 
+		{
+			visualizationScreen1.setMix(true);
+			visualizationScreen2.setMix(true);
 		}
 		
 				
@@ -96,15 +106,16 @@ package
 			artistdata2.addEventListener("complete",serviceLoaded);
 			artistdata2.load();
 			
-			var screen1Center:Point = new Point(SCREEN_WIDTH / 4, SCREEN_HEIGHT / 2);
+			var screen1Center:Point = new Point(SCREEN_WIDTH / 5, SCREEN_HEIGHT / 2);
 			visualizationScreen1 = new VisualizationScreen(screen1Center, false);
 			
-			var screen2Center:Point = new Point(SCREEN_WIDTH * (3 / 4), SCREEN_HEIGHT / 2);
+			var screen2Center:Point = new Point(SCREEN_WIDTH * (4 / 5), SCREEN_HEIGHT / 2);
 			visualizationScreen2 = new VisualizationScreen(screen2Center, true);
 			
 			visualizationScreen1.setOtherScreen(visualizationScreen2);
 			visualizationScreen2.setOtherScreen(visualizationScreen1);
 		
+			stage.focus = stage;
 		}
 		
 		

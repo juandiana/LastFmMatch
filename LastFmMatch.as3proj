@@ -6,17 +6,18 @@
     <movie input="" />
     <movie path="bin\LastFmMatch.swf" />
     <movie fps="30" />
-    <movie width="1650" />
-    <movie height="1050" />
+    <movie width="1024" />
+    <movie height="768" />
     <movie version="10" />
     <movie minorVersion="1" />
     <movie platform="Flash Player" />
     <movie background="#FFFFFF" />
+    <movie preferredSDK="D:\Program Files\FlashDevelop\Tools\flexsdk" />
   </output>
   <!-- Other classes to be compiled into your SWF -->
   <classpaths>
     <class path="src" />
-    <class path="lib/lastfm-as3" />
+    <class path="lib\lastfm-as3" />
   </classpaths>
   <!-- Build options -->
   <build>

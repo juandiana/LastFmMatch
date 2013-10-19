@@ -16,8 +16,8 @@ package
 		private static const MIN_VELOCITY:Number = 0;
 		private static const MAX_VELOCITY:Number = 0;
 		
-		public static const MIN_DIAMETER:Number = 80;		
-		public static const MAX_DIAMETER:Number = 200;
+		public static const MIN_DIAMETER:Number = 50;		
+		public static const MAX_DIAMETER:Number = 150;
 		private static const SAME_USER_ZERO_ATTRACTION_DISTANCE:Number = 600;
 		private static const SAME_NAME_ZERO_ATTRACTION_DISTANCE:Number = 50;
 		private static const SAME_TAG_ZERO_ATTRACTION_DISTANCE:Number = 400;
@@ -30,7 +30,7 @@ package
 		private var screen:VisualizationScreen;
 		private var topTagsLoader:TopArtistTags;
 		private var topTags:Vector.<String>;
-		
+		private var color:Color;
 		private var playcount:int;
 		
 		public function ArtistBall(name:String, playcount:int, diameter:Number, screen:VisualizationScreen, isRing:Boolean)
@@ -81,7 +81,7 @@ package
 				topTags.push(topTagsLoader.tags[i]["name"]);
 			}
 			
-			var color:Color = TagColors.instance.getColor(topTags[0]);
+			color = TagColors.instance.getColor(topTags[0]);
 			
 			mc.background.transform.colorTransform = new ColorTransform(1, 1, 1, 1, color.r, color.g, color.b);
 		}
@@ -165,11 +165,26 @@ package
 		
 		private function getZeroAttractionDistance(otherBall:ArtistBall):Number
 		{
+			/*
 			var tagsInCommon:Number = Main.itemsInCommon(topTags, otherBall.getTopTags());
 			
 			var distance:Number = 700 - tagsInCommon * 100;
 			
 			return distance;
+			*/
+			
+			if (color.isEqual(otherBall.getColor())) {
+				return 300;
+			}
+			else {
+				return 400;
+			}
+		}
+		
+		
+		public function getColor():Color
+		{
+			return color;
 		}
 		
 		
@@ -188,7 +203,7 @@ package
 		private function getNewSpawnPos():Point
 		{					
 			return Utils.addPoints(screen.center,
-				new Point(Utils.getRandomIntBetween( -200, 200), Utils.getRandomIntBetween( -200, 200)));		
+				new Point(Utils.getRandomIntBetween( -100, 100), Utils.getRandomIntBetween( -100, 100)));		
 		}
 		
 		
@@ -234,30 +249,6 @@ package
 		{
 			return getDistance(aBall) < aBall.getRadius() + getRadius();
 		}
-		
-		
-		public function getRepulsionSpeed(otherBall:ArtistBall):Point
-		{
-			//if distance = 0 => max repulsion
-			//if distance > aBall.getRadius() + getRadius => 0 repulsion
-			
-			var speed:Point = Utils.substractPoints(getPos(), otherBall.getPos());
-			
-			var radiusSum:Number = otherBall.getRadius() + getRadius();
-			var distance:Number = getDistance(otherBall);
-			
-			var maxRepulsion:Number = 200;
-			
-			if (distance > radiusSum) {
-				speed.normalize(0);
-			}			
-			else {				
-				speed.normalize(maxRepulsion * (1 - distance / radiusSum));
-			}
-			return speed;
-			
-		}
-		
 		
 	}
 
