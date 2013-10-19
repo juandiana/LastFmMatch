@@ -72,13 +72,14 @@ package
 		}
 		
 		
-		public function getColor(tag:String):Color
+		public function getColor(tags:Vector.<String>):Color
 		{
-			for (var i:int = 0; i < colorsAndTags.length; i++) {
-				var colorAndTags:ColorAndTags = colorsAndTags[i];				
-				if (colorAndTags.containsTag(tag)) {
-					return colorAndTags.getColor();
-				}				
+			for each (var colorAndTags:ColorAndTags in colorsAndTags) {
+				for each (var tag:String in tags) {
+					if (colorAndTags.containsTag(tag)) {
+						return colorAndTags.getColor();
+					}
+				}
 			}
 					
 			//If the tag is not in the list, then the color is gray.
