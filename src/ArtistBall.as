@@ -81,7 +81,7 @@ package
 				topTags.push(topTagsLoader.tags[i]["name"]);
 			}
 			
-			color = TagColors.instance.getColor(topTags[0]);
+			color = TagColors.instance.getColor(topTags);
 			
 			mc.background.transform.colorTransform = new ColorTransform(1, 1, 1, 1, color.r, color.g, color.b);
 		}
