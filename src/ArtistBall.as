@@ -32,12 +32,15 @@ package
 		private var topTags:Vector.<String>;
 		private var color:Color;
 		private var playcount:int;
+		private var colorTransform:ColorTransform;
+		private var name:String;
 		
 		public function ArtistBall(name:String, playcount:int, diameter:Number, screen:VisualizationScreen, isRing:Boolean)
 		{
 			this.diameter = diameter;
 			this.screen = screen;
 			this.playcount = playcount;
+			this.name = name;
 			
 			if (isRing) {
 				mc = new m_ArtistRing();
@@ -47,6 +50,8 @@ package
 			}
 			Main.instance.layer1.addChild(mc);				
 			
+			mc.gotoAndStop("normal");
+			
 			var pos:Point = getNewSpawnPos();
 			var speed:Point = Utils.substractPoints(Main.instance.getCenterOfScreen(), pos);
 			speed.normalize(Utils.getRandomNumberBetween(MIN_VELOCITY, MAX_VELOCITY));
@@ -54,7 +59,7 @@ package
 			mover = (MoverComponent)(mAddComponent(new MoverComponent(mc, pos, speed)));
 			scaler = (LinearMoverComponent)(mAddComponent(new LinearMoverComponent(new Point(0, 0), new Point(100, 0))));						
 			
-			mc.nameText.text = name;						
+			mc.nameText.text = name;
 			
 			mc.width = 0;
 			mc.height = 0;			
@@ -64,12 +69,12 @@ package
 			Main.instance.stage.addEventListener(MouseEvent.MOUSE_MOVE, onStageMouseMove);
 									
 			mc.addEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
-			mc.addEventListener(MouseEvent.MOUSE_OUT, onMouseOut);	
+			mc.addEventListener(MouseEvent.MOUSE_OUT, onMouseOut);
 			
 			topTagsLoader = new TopArtistTags(name);			
 			topTagsLoader.load();
 			topTagsLoader.addEventListener(Event.COMPLETE, onTagsLoaded);
-			mc.tagText.visible = false;
+
 		}
 
 		
@@ -83,7 +88,8 @@ package
 			
 			color = TagColors.instance.getColor(topTags);
 			
-			mc.background.transform.colorTransform = new ColorTransform(1, 1, 1, 1, color.r, color.g, color.b);
+			colorTransform = new ColorTransform(1, 1, 1, 1, color.r, color.g, color.b);	
+			mc.background.transform.colorTransform = colorTransform;
 		}
 		
 		
@@ -115,10 +121,10 @@ package
 		
 		
 		private function onMouseMove(e:MouseEvent):void 
-		{
+		{			
 			var tooltip:m_Tooltip = Main.instance.getTooltip();
 			tooltip.x = e.stageX;
-			tooltip.y = e.stageY;
+			tooltip.y = e.stageY - 10;
 			tooltip.mouseEnabled = false;
 			tooltip.mouseChildren = false;
 			tooltip.visible = true;
@@ -134,15 +140,28 @@ package
 				tooltip.gotoAndStop("up");
 			}
 			else {
-				tooltip.gotoAndStop("down");
+				tooltip.gotoAndStop("down");				
+				tooltip.y = e.stageY + 10;
 			}
+			
+			screen.turnOtherBallsGray(this);
 		}
 		
 		
 		private function onMouseOut(e:MouseEvent):void 		
 		{
-			trace("MOUSE OUT");
-			Main.instance.getTooltip().visible = false;
+			if (isOutOfBall(e)) {			
+				trace("MOUSE OUT");
+				Main.instance.getTooltip().visible = false;
+				
+				screen.returnOtherBallsToNormal(this);
+			}
+		}
+		
+		
+		private function isOutOfBall(e:MouseEvent):Boolean
+		{
+			return Point.distance(new Point(e.stageX, e.stageY), getPos()) > mc.width / 2;
 		}
 		
 		
@@ -252,6 +271,23 @@ package
 		public function overlaps(aBall:ArtistBall):Boolean
 		{
 			return getDistance(aBall) < aBall.getRadius() + getRadius();
+		}
+		
+		
+		public function turnGray():void 
+		{
+			mc.gotoAndStop("gray");
+		}
+		
+		
+		public function returnToNormal():void 
+		{
+			mc.gotoAndStop("normal");
+			if (colorTransform != null) {
+				mc.background.transform.colorTransform = colorTransform;
+			}
+			
+			mc.nameText.text = name;
 		}
 		
 	}

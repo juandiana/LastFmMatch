@@ -40,6 +40,7 @@ package
 		
 		public var layer1:MovieClip;
 		public var layer2:MovieClip;
+		public var layer3:MovieClip;
 		
 		public function Main():void 
 		{
@@ -61,15 +62,17 @@ package
 			
 			layer1 = new MovieClip();
 			layer2 = new MovieClip();
+			layer3 = new MovieClip();
 			addChild(layer1);
 			addChild(layer2);
+			addChild(layer3);
 			
 			new UsernameScreen();			
 			
 			tooltip = new m_Tooltip();
 			tooltip.gotoAndStop("up");
 			
-			layer2.addChild(tooltip);			
+			layer3.addChild(tooltip);			
 
 		}
 		

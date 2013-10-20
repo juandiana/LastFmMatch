@@ -128,6 +128,32 @@ package
 		{
 			this.mix = mix;
 		}
+
+		
+		public function turnOtherBallsGray(except:ArtistBall):void 
+		{
+			for each (var ball:ArtistBall in mGetManageables()) {
+				if (ball != except) {
+					ball.turnGray();
+				}
+			}
+			for each (ball in otherScreen.mGetManageables()) {
+				ball.turnGray();
+			}
+		}
+		
+		
+		public function returnOtherBallsToNormal(except:ArtistBall):void
+		{
+			for each (var ball:ArtistBall in mGetManageables()) {
+				if (ball != except) {
+					ball.returnToNormal();
+				}
+			}
+			for each (ball in otherScreen.mGetManageables()) {
+				ball.returnToNormal();
+			}
+		}
 	}
 
 }

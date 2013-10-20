@@ -16,7 +16,7 @@
     </define>
     <define append="true">
       <name>CONFIG::timeStamp</name>
-      <value>'10/19/2013'</value>
+      <value>'10/20/2013'</value>
     </define>
     <define append="true">
       <name>CONFIG::air</name>
@@ -34,7 +34,6 @@
     <source-path append="true">
       <path-element>D:\Store\Workspace\Proyectos FIng\LastFmMatch\src</path-element>
       <path-element>D:\Store\Workspace\Proyectos FIng\LastFmMatch\lib\lastfm-as3</path-element>
-      <path-element>D:\Program Files\FlashDevelop\Library\AS3\classes</path-element>
     </source-path>
     <library-path append="true">
       <path-element>D:\Store\Workspace\Proyectos FIng\LastFmMatch\assets.swc</path-element>
