@@ -23,7 +23,7 @@ package
 		
 		public function VisualizationScreen(center:Point, hasRings:Boolean)
 		{	
-			Main.instance.layer1.addChild(new m_ScreenBackground);
+			Main.instance.ballsLayer.addChild(new m_ScreenBackground);
 			_center = center;	
 			
 			this.hasRings = hasRings;

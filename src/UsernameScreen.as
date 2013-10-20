@@ -16,7 +16,7 @@ package
 		{
 			trace("new username screen");
 			mc = new m_UsernameScreen();
-			Main.instance.layer1.addChild(mc);
+			Main.instance.ballsLayer.addChild(mc);
 			mc.okButton.addEventListener(MouseEvent.CLICK, onOkButtonClick);
 			Main.instance.stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
 		}
@@ -35,7 +35,7 @@ package
 		
 		private function startVisualization():void {			
 			Main.instance.startVisualization(mc.input1.text, mc.input2.text);
-			Main.instance.layer1.removeChild(mc);
+			Main.instance.ballsLayer.removeChild(mc);
 		}
 	}
 

@@ -26,9 +26,6 @@ package
 		
 		public static var instance:Main;
 		
-		public var ballsLayer:MovieClip;
-		public var particlesLayer:MovieClip;
-		
 		private var artistdata1:TopUserArtists;
 		private var artistdata2:TopUserArtists;
 		private var lastTime:Number;
@@ -38,9 +35,10 @@ package
 		private var tooltip:m_Tooltip;
 		private var divisionLine:m_divisionLine;
 		
-		public var layer1:MovieClip;
-		public var layer2:MovieClip;
-		public var layer3:MovieClip;
+		public var ballsLayer:MovieClip;
+		public var frontBallLayer:MovieClip;
+		public var lineLayer:MovieClip;
+		public var tooltipLayer:MovieClip;
 		
 		public function Main():void 
 		{
@@ -60,19 +58,21 @@ package
 			
 			stage.addEventListener(Event.ENTER_FRAME, onEnterFrame);						
 			
-			layer1 = new MovieClip();
-			layer2 = new MovieClip();
-			layer3 = new MovieClip();
-			addChild(layer1);
-			addChild(layer2);
-			addChild(layer3);
+			ballsLayer = new MovieClip();
+			frontBallLayer = new MovieClip();
+			lineLayer = new MovieClip();
+			tooltipLayer = new MovieClip();
+			addChild(ballsLayer);
+			addChild(frontBallLayer);
+			addChild(lineLayer);
+			addChild(tooltipLayer);
 			
 			new UsernameScreen();			
 			
 			tooltip = new m_Tooltip();
 			tooltip.gotoAndStop("up");
 			
-			layer3.addChild(tooltip);			
+			tooltipLayer.addChild(tooltip);			
 
 		}
 		
@@ -99,7 +99,7 @@ package
 									
 			divisionLine = new m_divisionLine();
 			divisionLine.gotoAndStop("join");
-			layer2.addChild(divisionLine);
+			lineLayer.addChild(divisionLine);
 			divisionLine.x = SCREEN_WIDTH / 2;			
 			divisionLine.y = 0;
 			divisionLine.joinBtn.addEventListener(MouseEvent.CLICK, onJoinButtonClick);

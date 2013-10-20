@@ -48,7 +48,7 @@ package
 			else {
 				mc = new m_ArtistBall();
 			}
-			Main.instance.layer1.addChild(mc);				
+			Main.instance.ballsLayer.addChild(mc);				
 			
 			mc.gotoAndStop("normal");
 			
@@ -148,6 +148,7 @@ package
 			}
 			
 			returnToNormal();
+			Main.instance.frontBallLayer.addChild(mc);
 			screen.turnOtherBallsGray(this);
 		}
 		
@@ -187,20 +188,12 @@ package
 		
 		private function getZeroAttractionDistance(otherBall:ArtistBall):Number
 		{
-			/*
-			var tagsInCommon:Number = Main.itemsInCommon(topTags, otherBall.getTopTags());
-			
-			var distance:Number = 700 - tagsInCommon * 100;
-			
-			return distance;
-			*/
-			
 			if (color == null || otherBall.getColor() == null) {
 				return 400;
 			}
 			
 			if (color.isEqual(otherBall.getColor())) {
-				return 300;
+				return 350;
 			}
 			else {
 				return 400;
