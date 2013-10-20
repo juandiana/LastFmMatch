@@ -89,7 +89,10 @@ package
 			color = TagColors.instance.getColor(topTags);
 			
 			colorTransform = new ColorTransform(1, 1, 1, 1, color.r, color.g, color.b);	
-			mc.background.transform.colorTransform = colorTransform;
+			
+			if (mc.currentLabel != "gray") {			
+				mc.background.transform.colorTransform = colorTransform;
+			}
 		}
 		
 		
@@ -144,14 +147,14 @@ package
 				tooltip.y = e.stageY + 10;
 			}
 			
+			returnToNormal();
 			screen.turnOtherBallsGray(this);
 		}
 		
 		
 		private function onMouseOut(e:MouseEvent):void 		
 		{
-			if (isOutOfBall(e)) {			
-				trace("MOUSE OUT");
+			if (isOutOfBall(e)) {							
 				Main.instance.getTooltip().visible = false;
 				
 				screen.returnOtherBallsToNormal(this);
@@ -264,7 +267,7 @@ package
 		
 		public function getArtistName():String
 		{
-			return mc.nameText.text;
+			return name;
 		}
 		
 		

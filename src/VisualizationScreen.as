@@ -19,6 +19,7 @@ package
 		private var otherScreen:VisualizationScreen;	
 		private var hasRings:Boolean;
 		private var mix:Boolean;
+		private var everyoneIsBornGray:Boolean;
 		
 		public function VisualizationScreen(center:Point, hasRings:Boolean)
 		{	
@@ -31,7 +32,7 @@ package
 		
 		public function initArtists(artists:Array):void
 		{
-			schedule(onCreateArtistName, TIME_BETWEEN_BALLS, NUM_ARTISTS);
+			schedule(onCreateArtistBall, TIME_BETWEEN_BALLS, NUM_ARTISTS);
 			this.artists = artists;			
 			
 			maxPlaycount = artists[0]["playcount"];
@@ -93,7 +94,7 @@ package
 		}
 		
 		
-		private function onCreateArtistName(e:Event):void 
+		private function onCreateArtistBall(e:Event):void 
 		{
 			if (numArtistsWithoutBall > 0) {
 				var randomNumber:int = Utils.getRandomIntBetween(0, numArtistsWithoutBall - 1);
@@ -105,8 +106,13 @@ package
 				var diameter:Number = ArtistBall.MIN_DIAMETER + 
 					(ArtistBall.MAX_DIAMETER - ArtistBall.MIN_DIAMETER) * artistPlaycount / maxPlaycount;
 				
-				mAddManageable(new ArtistBall(artistName, artistPlaycount, diameter, this, hasRings));	
+				var artistBall:ArtistBall = (ArtistBall)
+					(mAddManageable(new ArtistBall(artistName, artistPlaycount, diameter, this, hasRings)));	
 				
+				if (everyoneIsBornGray) {
+					artistBall.turnGray();
+				}
+					
 				numArtistsWithoutBall--;
 			}
 		}
@@ -132,27 +138,39 @@ package
 		
 		public function turnOtherBallsGray(except:ArtistBall):void 
 		{
-			for each (var ball:ArtistBall in mGetManageables()) {
+			for each (var ball:ArtistBall in mGetManageables()) {				
 				if (ball != except) {
 					ball.turnGray();
 				}
 			}
 			for each (ball in otherScreen.mGetManageables()) {
-				ball.turnGray();
+				if (ball.getArtistName() != except.getArtistName()) {
+					ball.turnGray();
+				}
 			}
+			
+			everyoneIsBornGray = true;
+			otherScreen.setEveryoneIsBornGray(true);
 		}
 		
 		
 		public function returnOtherBallsToNormal(except:ArtistBall):void
-		{
-			for each (var ball:ArtistBall in mGetManageables()) {
-				if (ball != except) {
-					ball.returnToNormal();
-				}
+		{			
+			for each (var ball:ArtistBall in mGetManageables()) {				
+				ball.returnToNormal();				
 			}
 			for each (ball in otherScreen.mGetManageables()) {
 				ball.returnToNormal();
 			}
+			
+			everyoneIsBornGray = false;
+			otherScreen.setEveryoneIsBornGray(false);
+		}
+		
+		
+		private function setEveryoneIsBornGray(value:Boolean):void 
+		{
+			everyoneIsBornGray = value;
 		}
 	}
 
