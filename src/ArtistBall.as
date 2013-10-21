@@ -33,7 +33,9 @@ package
 		private var color:Color;
 		private var playcount:int;
 		private var colorTransform:ColorTransform;
+		private var colorTransformText:ColorTransform;
 		private var name:String;
+		private var isRing:Boolean;
 		
 		public function ArtistBall(name:String, playcount:int, diameter:Number, screen:VisualizationScreen, isRing:Boolean)
 		{
@@ -41,7 +43,7 @@ package
 			this.screen = screen;
 			this.playcount = playcount;
 			this.name = name;
-			
+			this.isRing = isRing;
 			if (isRing) {
 				mc = new m_ArtistRing();
 			}
@@ -88,10 +90,17 @@ package
 			
 			color = TagColors.instance.getColor(topTags);
 			
-			colorTransform = new ColorTransform(1, 1, 1, 1, color.r, color.g, color.b);	
-			
-			if (mc.currentLabel != "gray") {			
+			if (mc.currentLabel != "gray") {
+				colorTransform = new ColorTransform(1, 1, 1, 1, color.r, color.g, color.b);	
 				mc.background.transform.colorTransform = colorTransform;
+				
+				if (isRing) {
+					colorTransformText = new ColorTransform(1, 1, 1, 1, color.r, color.g, color.b);
+				} else {
+					colorTransformText = new ColorTransform(1, 1, 1, 1, 255, 255, 255);
+				}
+				
+				mc.nameText.transform.colorTransform = colorTransformText;
 			}
 		}
 		
@@ -281,6 +290,7 @@ package
 			mc.gotoAndStop("normal");
 			if (colorTransform != null) {
 				mc.background.transform.colorTransform = colorTransform;
+				mc.nameText.transform.colorTransform = colorTransformText;
 			}
 			
 			mc.nameText.text = name;
